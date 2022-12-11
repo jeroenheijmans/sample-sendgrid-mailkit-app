@@ -19,6 +19,12 @@ try
     var sendGridOptions = config.GetSection("SendGrid").Get<SendGridOptions>()
         ?? throw new Exception("Missing SendGrid appsettings");
 
+    if (sendGridOptions.ApiKey == "ENTER_YOUR_KEY_HERE")
+    {
+        Log.Error("Missing SendGrid ApiKey (and possibly other settings");
+        throw new Exception("Missing SendGrid ApiKey (and possibly other settings). Did you create UserSecrets yet? Or change the appsettings (but don't commit your secrets!)?");
+    }
+
     Log.Information("Starting sample app.");
 
     using var message = new MimeMessage();
